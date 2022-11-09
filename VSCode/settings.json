@@ -1,0 +1,16 @@
+{
+    "workbench.colorTheme": "Monokai Pro (Filter Machine)",
+    "editor.inlineSuggest.enabled": true,
+    "winopacity.opacity": 205,
+    "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
+    "glassit.alpha": 235,
+    "everforest.highContrast": true,
+    "everforest.darkContrast": "hard",
+    "everforest.darkCursor": "purple",
+    "everforest.diagnosticTextBackgroundOpacity": "25%",
+    "everforest.darkWorkbench": "high-contrast",
+    "editor.fontFamily": "'Hurmit Nerd Font Mono'",
+    "git.autofetch": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.minimap.enabled": false
+}
