@@ -138,6 +138,7 @@ alias hch='p $CODING/Python/HackerChat/hackerchat.py'
 alias hs='hc && p $CODING/Python/HackerChat/hackerserver.py'
 alias dot='f() { cd $HOME/.dotfiles/"$1"; unset -f f; }; f'
 alias cnf='f() { cd $HOME/.config/"$1"; unset -f f; }; f'
+alias home='cd $HOME'
 
 alias hsk='school 3 1 EP/Haskell'
 alias scl='cd $HOME/Documents/School'
