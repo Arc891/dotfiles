@@ -8,7 +8,7 @@ alias cd~='cd $HOME'
 alias cd-='cd -'
 
 DOTFILES="$HOME/.dotfiles"
-CODING="$HOME/Documents/Personal/Coding"
+CODING="$HOME/Documents/Coding"
 
 cons() { . $DOTFILES/scripts/conservation_mode.sh "$1"; }
 swap_cons() { . $DOTFILES/scripts/swap_cons_mode.sh; }
@@ -138,10 +138,14 @@ alias hch='p $CODING/Python/HackerChat/hackerchat.py'
 alias hs='hc && p $CODING/Python/HackerChat/hackerserver.py'
 alias dot='f() { cd $HOME/.dotfiles/"$1"; unset -f f; }; f'
 alias cnf='f() { cd $HOME/.config/"$1"; unset -f f; }; f'
+alias conf='cnf'
 alias home='cd $HOME'
+alias docs='cd $HOME/Documents'
+alias pers='cd $HOME/Documents/Personal'
+alias scl='cd $HOME/Documents/School'
 
 alias hsk='school 3 1 EP/Haskell'
-alias scl='cd $HOME/Documents/School'
+alias sp='school 3 2 SP/SP-A1'
 
 alias bws='rbw sync'
 
@@ -149,11 +153,12 @@ alias v='vim'
 alias sv='sudo vim'
 alias vb='v $HOME/.bash_aliases'
 alias vbr='v $HOME/.bashrc'
-alias vms='vim $DOTFILES/scripts/vim_shortcuts.txt'
+alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
+alias vrc='sudo vim /etc/vim/vimrc'
 
 alias rf='source $HOME/.bashrc'
 alias rc='clear && rf'
-alias cl='clear && welcome'
+alias cl='clear && print_welcome'
 
 alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
@@ -178,6 +183,18 @@ alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 alias matrix1='cat $DOTFILES/ascii/matrixSlant1'
 alias matrix2='cat $DOTFILES/ascii/matrixSlant2'
 alias welcome='cat $DOTFILES/ascii/welcomeSlant'
+alias welcome-small='cat $DOTFILES/ascii/welcome-small'
+alias nwelcome="echo Arc8\'s Linux"
 
 #neofetch
-welcome
+print_welcome() {
+	if [[ $COLUMNS -le 34 ]]; then
+		nwelcome	
+	elif [[ $COLUMNS -le 67 ]]; then
+		welcome-small
+	else 
+		welcome
+	fi
+}
+
+print_welcome
