@@ -116,9 +116,19 @@ extract() {
 	fi
 }
 
+alias myip='curl ifconfig.me && printf "\n"'
+alias myipl="ifconfig wlp4s0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
+
+myips() {
+	printf "Global ip: ";
+	curl ifconfig.me;
+	printf "\n Local ip: "
+	myipl;
+}
 
 alias idea='/opt/idea/idea-IC-213.6777.52/bin/idea.sh >/dev/null 2>/dev/null || bg &'
 alias battery='sudo tlp-stat -b'
+alias ngtcp='ngrok tcp 22'
 
 alias gts='git status'
 alias ga='f(){ git add "$1"; unset -f f; }; f'
@@ -147,6 +157,19 @@ alias scl='cd $HOME/Documents/School'
 
 alias hsk='school 3 1 EP/Haskell'
 alias sp='school 3 2 SP/SP-A2'
+alias spc='./client localhost'
+alias sps='./server'
+
+spp() {
+	nums='^[0-9]+$'
+	if [[ $1 -ge 7 ]]; then
+		echo "Only 6 dirs, enter valid number"
+	elif ! [[ $1 =~ $nums ]]; then
+		echo "Only numbers valid as argument"
+	else
+		sp && cd program$1
+	fi
+}
 
 alias bws='rbw sync'
 
