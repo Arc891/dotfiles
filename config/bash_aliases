@@ -199,6 +199,8 @@ alias fhere='find . -name '
 alias fall='sudo find / -name '
 
 alias smt='tree -h -L 2'
+alias fta='tree -af / | grep'
+alias fth='tree -af | grep'
 
 alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
 
