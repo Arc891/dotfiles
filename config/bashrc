@@ -125,3 +125,4 @@ if [ -f `which powerline-daemon` ]; then
     POWERLINE_BASH_SELECT=1
 fi
 
+. "$HOME/.cargo/env"
