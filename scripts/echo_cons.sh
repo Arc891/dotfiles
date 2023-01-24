@@ -10,6 +10,8 @@ then
 	echo $ICON" 󰌪"
 
 else
-	echo $ICON" 󱐋"
+	echo $ICON
 fi
+
+# 󱐋
 
