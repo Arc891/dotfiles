@@ -159,6 +159,7 @@ alias hsk='school 3 1 EP/Haskell'
 alias sp='school 3 2 SP/SP-A2'
 alias spc='./client localhost'
 alias sps='./server'
+alias coco='school 3 3 CCS/Ass1/vu-coco-public'
 
 spp() {
 	nums='^[0-9]+$'
