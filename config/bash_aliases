@@ -159,13 +159,12 @@ alias hsk='school 3 1 EP/Haskell'
 alias sp='school 3 2 SP/SP-A2'
 alias spc='./client localhost'
 alias sps='./server'
+alias coco='school 3 3 CCS/Ass1/vu-coco-public'
 
 spp() {
-	nums='^[0-9]+$'
-	if [[ $1 -ge 7 ]]; then
-		echo "Only 6 dirs, enter valid number"
-	elif ! [[ $1 =~ $nums ]]; then
-		echo "Only numbers valid as argument"
+	nums='^[1-6]+$'
+	if ! [[ $1 =~ $nums ]]; then
+		echo "Bad argument, either NaN or not in range [1, 6]"
 	else
 		sp && cd program$1
 	fi
