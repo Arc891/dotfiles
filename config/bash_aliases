@@ -28,7 +28,7 @@ rename() {
 			echo mv -i -- "$f" "${f//$1/$2}"
 		done
 
-		read -p "Are you sure you want to make these changes? [N/y]" confirm;
+		read -p "Are you sure you want to make these changes? [N/y] " confirm;
 		
 		if [ -z "$confirm" ] || [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
 			echo "Aborting..."
