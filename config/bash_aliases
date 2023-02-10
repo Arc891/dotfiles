@@ -9,76 +9,46 @@ alias cd-='cd -'
 
 DOTFILES="$HOME/.dotfiles"
 CODING="$HOME/Documents/Coding"
-
-cons() { . $DOTFILES/scripts/conservation_mode.sh "$1"; }
-swap_cons() { . $DOTFILES/scripts/swap_cons_mode.sh; }
-
-memus() { ps -aux | rg "$1" | awk '{print $4}' | awk '{s+=$1} END {print s}'; }
-
-cus() { ps -aux | rg "$1" | awk '{print $3}' | awk '{s+=$1} END {print s/16}'; }
-
-usage() { echo "CPU: $(cus $1)%, MEM: $(memus $1)%"; }
+SYSTEM="arch"
+GH_USER="Arc891"
 
 
-push() {
-	git add *;
-	git commit -m "$1";
-	git push;
-}
-
-mkreponew() {
-	if [[ $# < 2 ]]
-	then
-		echo "Too few arguments ($#). Usage: createrepo {repo_name} {true / false (for private)}"
-	else
-		TOKEN="$(cat $HOME/.token)"	
-		curl -s -u Arc891:$TOKEN https://api.github.com/user/repos -d '{"name":"'$1'","private":'$2'}'; 
-		
-		mcd $1;
-		echo "# $1" > README.md;
-		git init -b main;
-		git add *
-		git commit -m "Initial commit";
-		git remote add origin git@github.com:Arc891/$1.git;
-		git push -u origin main;
-		xdg-open https://github.com/Arc891/$1 >/dev/null;
-	fi	
-}
-
-
-mkrepo() {
-	if [[ $# < 2 ]]
-	then
-		echo "Too few arguments ($#). Usage: createrepo {repo_name} {true / false (for private)}"
-	else
-		TOKEN="$(cat $HOME/.token)"	
-		curl -s -u Arc891:$TOKEN https://api.github.com/user/repos -d '{"name":"'$1'","private":'$2'}'; 
-		
-		git init -b main;
-		git add *
-		git commit -m "Initial commit";
-		git remote add origin git@github.com:Arc891/$1.git;
-		git push -u origin main;
-		xdg-open https://github.com/Arc891/$1 >/dev/null;
-	fi	
-}
-
-rmrepo() {
-	TOKEN="$(cat $HOME/.token)";
-	curl \
-  	-X DELETE \
-  	-H "Accept: application/vnd.github.v3+json" \
-  	-H "Authorization: token $TOKEN" \
-  	https://api.github.com/repos/Arc891/$1
-	cd .. && rm -rf $1;
-}
+######## FUNCTIONS ########
 
 trans() { sh -c "xprop -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY $(printf 0x%x $((0xffffffff * $1 / 100)))"; }
 
 mcd() { mkdir -p $1; cd $1; }
 
-school() { cd $HOME/Documents/School/BScCSy"$1"/Period"$2"/"$3"; }
-scopen() { school "$1" "$2" && open "$3" > /dev/null 2>&1; }
+rename() {
+	if [ -z "$1" ]; then
+		echo "No parameters given"
+		return 1
+	else
+		for f in *$1*; do
+			echo mv -i -- "$f" "${f//$1/$2}"
+		done
+
+		read -p "Are you sure you want to make these changes? [N/y]" confirm;
+		
+		if [ -z "$confirm" ] || [ "$confirm" = "n" ] || [ "$confirm" = "N" ]; then
+			echo "Aborting..."
+			return 0
+		
+		elif [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+			echo "Changing file names..."
+			
+			for f in *$1*; do 
+				mv -i -- "$f" "${f//$1/$2}"
+			done
+		
+			ls;
+			
+		else
+			echo "Bad input, aborting..."
+		fi
+	fi
+}
+
 
 extract() {
 	if [ -z "$1" ]; then
@@ -116,6 +86,21 @@ extract() {
 	fi
 }
 
+##############################
+
+
+
+######## CONNECTIONS  ########
+
+wifi_connect() {
+	nmcli dev wifi list;
+	read -p "Enter the network name or SSID: " network_name;
+	echo 'Connecting to' $network_name;
+	sudo nmcli dev wifi connect $network_name;
+}
+
+alias wls='nmcli dev wifi list'
+alias wlsc='wls && wifi_connect'
 alias myip='curl ifconfig.me && printf "\n"'
 alias myipl="ifconfig wlp4s0 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
@@ -126,9 +111,86 @@ myips() {
 	myipl;
 }
 
-alias idea='/opt/idea/idea-IC-213.6777.52/bin/idea.sh >/dev/null 2>/dev/null || bg &'
-alias battery='sudo tlp-stat -b'
+
 alias ngtcp='ngrok tcp 22'
+
+##############################
+
+
+
+######## SYSTEM CONTROL ########
+
+cons() { . $DOTFILES/scripts/conservation_mode.sh "$1"; }
+swap-cons() { . $DOTFILES/scripts/swap_cons_mode.sh; }
+echo-cons() { . $DOTFILES/scripts/echo_cons.sh; }
+
+memus() { ps -aux | rg "$1" | awk '{print $4}' | awk '{s+=$1} END {print s}'; }
+
+cus() { ps -aux | rg "$1" | awk '{print $3}' | awk '{s+=$1} END {print s/16}'; }
+
+usage() { echo "CPU: $(cus $1)%, MEM: $(memus $1)%"; }
+
+alias battery='sudo tlp-stat -b'
+alias bat='cat /sys/class/power_supply/BAT*/capacity'
+alias btc='bluetoothctl'
+alias brf='brightnessctl set 100%'
+
+##############################
+
+
+######## GIT ########
+
+push() {
+	git add *;
+	git commit -m "$1";
+	git push;
+}
+
+mkreponew() {
+	if [[ $# < 2 ]]
+	then
+		echo "Too few arguments ($#). Usage: createrepo {repo_name} {true / false (for private)}"
+	else
+		TOKEN="$(cat $HOME/.token)"	
+		curl -s -u $GH_USER:$TOKEN https://api.github.com/user/repos -d '{"name":"'$1'","private":'$2'}'; 
+		
+		mcd $1;
+		echo "# $1" > README.md;
+		git init -b main;
+		git add *
+		git commit -m "Initial commit";
+		git remote add origin git@github.com:$GH_USER/$1.git;
+		git push -u origin main;
+		xdg-open https://github.com/$GH_USER/$1 >/dev/null;
+	fi	
+}
+
+mkrepo() {
+	if [[ $# < 2 ]]
+	then
+		echo "Too few arguments ($#). Usage: createrepo {repo_name} {true / false (for private)}"
+	else
+		TOKEN="$(cat $HOME/.token)"	
+		curl -s -u $GH_USER:$TOKEN https://api.github.com/user/repos -d '{"name":"'$1'","private":'$2'}'; 
+		
+		git init -b main;
+		git add *
+		git commit -m "Initial commit";
+		git remote add origin git@github.com:$GH_USER/$1.git;
+		git push -u origin main;
+		xdg-open https://github.com/$GH_USER/$1 >/dev/null;
+	fi	
+}
+
+rmrepo() {
+	TOKEN="$(cat $HOME/.token)";
+	curl \
+  	-X DELETE \
+  	-H "Accept: application/vnd.github.v3+json" \
+  	-H "Authorization: token $TOKEN" \
+  	https://api.github.com/repos/$GH_USER/$1
+	cd .. && rm -rf $1;
+}
 
 alias gts='git status'
 alias ga='f(){ git add "$1"; unset -f f; }; f'
@@ -137,8 +199,17 @@ alias gp='git push'
 alias gpl='git pull'
 alias gplp='git pull && git push'
 alias gcm='f(){ git commit -m "$1"; unset -f f; }; f'
-alias gopen='f(){ xdg-open https://github.com/Arc891/$1 >/dev/null; unset -f f; }; f'
+alias gopen='f(){ xdg-open https://github.com/$GH_USER/$1 >/dev/null; unset -f f; }; f'
 alias gurl='git remote get-url origin'
+
+##############################
+
+
+
+######## OPENING FOLDERS ########
+
+school() { cd $HOME/Documents/School/BScCSy"$1"/Period"$2"/"$3"; }
+scopen() { school "$1" "$2" && open "$3" > /dev/null 2>&1; }
 
 alias open='f(){ xdg-open $("pwd")/"$1"; unset -f f; }; f'
 alias coding='f(){ cd $CODING/"$1"; unset -f f; }; f'
@@ -154,74 +225,145 @@ alias home='cd $HOME'
 alias docs='cd $HOME/Documents'
 alias pers='cd $HOME/Documents/Personal'
 alias scl='cd $HOME/Documents/School'
-
-alias hsk='school 3 1 EP/Haskell'
-alias sp='school 3 2 SP/SP-A2'
-alias spc='./client localhost'
-alias sps='./server'
-alias coco='school 3 3 CCS/Ass1/vu-coco-public'
+alias coco='cd $HOME/Documents/CoCoS'
 
 spp() {
-	nums='^[1-6]+$'
-	if ! [[ $1 =~ $nums ]]; then
-		echo "Bad argument, either NaN or not in range [1, 6]"
+	nums='^[0-9]+$'
+	if [[ $1 -ge 7 ]]; then
+		echo "Only 6 dirs, enter valid number"
+	elif ! [[ $1 =~ $nums ]]; then
+		echo "Only numbers valid as argument"
 	else
 		sp && cd program$1
 	fi
 }
 
-alias bws='rbw sync'
+##############################
 
-alias v='vim'
+
+
+######## EDITING FILES/FOLDERS ########
+
 alias v.='vim .'
 alias sv='sudo vim'
 alias vb='v $HOME/.bash_aliases'
 alias vbr='v $HOME/.bashrc'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
 alias vrc='sudo vim /etc/vim/vimrc'
-
-alias rf='source $HOME/.bashrc'
-alias rc='clear && rf'
-alias cl='clear && print_welcome'
-alias cle='clear'
-
+alias vbsp='v $HOME/.config/bspwm/bspwmrc'
+alias vsx='v $HOME/.config/sxhkd/sxhkdrc'
+alias polyconf='v $HOME/.config/bspwm/rices/$RICETHEME/polybar/config.ini'
+alias polymods='v $HOME/.config/bspwm/rices/$RICETHEME/polybar/modules.ini'
+alias rice='v .config/bspwm/rices/$RICETHEME/'
 alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
+alias rscripts='v .config/bspwm/scripts/'
 
+##############################
+
+
+
+######## DOCKER ########
+
+alias d='docker'
+alias dc='docker container'
+alias dcs='dc start'
+alias dcp='dc stop'
+alias da='docker attach'
+
+##############################
+
+
+
+######## 1 LETTER SHORTHANDS ########
+
+alias v='vim'
 alias q='exit 0'
 alias p='python3'
+
+##############################
+
+
+
+######## PACKAGE MANAGER ########
 
 alias sup='sudo apt update'
 alias supg='sup && sudo apt upgrade'
 
-alias fhere='find . -name '
-alias fall='sudo find / -name '
 
-alias smt='tree -h -L 2'
-alias fta='tree -af / | grep'
+##############################
+
+
+
+
+######## FIND FILES ########
+
+alias fhere='find . -name'
+alias fall='sudo find / -name'
 alias fth='tree -af | grep'
+alias fta='tree -af / | grep'
+alias smt='tree -ah -L 2'
 
-alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
+##############################
+
+
+
+######## SPICETIFY ########
 
 alias spia='spicetify apply'
 alias spith='f(){ spicetify config current_theme "$1"; unset -f f; }; f'
 alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 
-alias matrix1='cat $DOTFILES/ascii/matrixSlant1'
-alias matrix2='cat $DOTFILES/ascii/matrixSlant2'
-alias welcome='cat $DOTFILES/ascii/welcomeSlant'
-alias welcome-small='cat $DOTFILES/ascii/welcome-small'
-alias nwelcome="echo Arc8\'s Linux"
+##############################
 
-#neofetch
+
+
+######## ASCII ART ########
+
+alias matrix1='cat $DOTFILES/ascii/matrix-Slant1'
+alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
+alias welcome='cat $DOTFILES/ascii/$SYSTEM-Slant'
+alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
+alias nwelcome="echo Arc8\'s $SYSTEM"
+alias ascii='xdg-open https://patorjk.com/software/taag &'
+
 print_welcome() {
 	if [[ $COLUMNS -le 34 ]]; then
 		nwelcome	
-	elif [[ $COLUMNS -le 67 ]]; then
+	elif [[ $COLUMNS -le 72 ]]; then
 		welcome-small
 	else 
 		welcome
 	fi
 }
 
+##############################
+
+
+
+######## REFRESH ########
+
+alias cl='clear && print_welcome'
+alias cle='clear'
+alias rc='clear && source $HOME/.bashrc'
+alias rf='source $HOME/.bashrc'
+
+##############################
+
+
+
+######## RANDOM STUFF ########
+
+alias bws='rbw sync'
+
+alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
+
+##############################
+
+
+
+######## STARTUP COMMANDS ########
+
 print_welcome
+#neofetch
+. "$HOME/.cargo/env"
