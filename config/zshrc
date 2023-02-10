@@ -6,187 +6,19 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Zsh aliases
-alias rc="source $HOME/.zshrc && clear"
 alias .="source"
+alias rc="source $HOME/.zshrc && clear"
 alias vz="vim $HOME/.zshrc"
 alias vssh='vim $HOME/.ssh/config'
-alias b="brew"
-alias bu="brew update"
-alias bi="brew install"
 
 # Zsh prompts
 # PS1="[%{$fg[red]%}%n%{$reset_color%}: %{$fg[blue]%}%~%{$reset_color%}] %% "
 autoload -U colors && colors
 
-# autoload -Uz promptinit
-# promptinit
-# prompt pws
+# Own aliases
+source ~/.bash_aliases
 
-# Bash aliases
-alias ll='pwd && ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias lsl='pwd && ls'
-alias cd.='cd ..'
-alias cd~='cd $HOME'
-alias cd-='cd -'
-
-DOTFILES="$HOME/Documents/Personal/dotfiles"
-CODING="$HOME/Documents/Personal/"
-DOCUMENTS="$HOME/Documents/"
-
-memus() { ps -aux | rg "$1" | awk '{print $4}' | awk '{s+=$1} END {print s}'; }
-
-cus() { ps -aux | rg "$1" | awk '{print $3}' | awk '{s+=$1} END {print s/16}'; }
-
-usage() { echo "CPU: $(cus $1)%, MEM: $(memus $1)%"; }
-
-
-push() {
-	git add *;
-	git commit -m "$1";
-	git push;
-}
-
-
-mcd() { mkdir -p $1; cd $1; }
-
-extract() {
-	if [ -z "$1" ]; then
-    		# display usage if no parameters given
-    		echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    		echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-    		return 1
- 	else
-    		for n in $@
-    		do
-      			if [ -f "$n" ] ; then
-          		case "${n%,}" in
-            			*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
-                         		     tar xvf "$n"       ;;
-            			*.lzma)      unlzma ./"$n"      ;;
-            			*.bz2)       bunzip2 ./"$n"     ;;
-            			*.rar)       unrar x -ad ./"$n" ;;
-            			*.gz)        gunzip ./"$n"      ;;
-            			*.zip)       unzip ./"$n"       ;;
-            			*.z)         uncompress ./"$n"  ;;
-            			*.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
-                         		     7z x ./"$n"        ;;
-            			*.xz)        unxz ./"$n"        ;;
-            			*.exe)       cabextract ./"$n"  ;;
-            			*)
-                         	echo "extract: '$n' - unknown archive method"
-                         	return 1
-                         	;;
-          		esac
-      			else
-          			echo "'$n' - file does not exist"
-          			return 1
-      			fi
-    		done
-	fi
-}
-
-
-# alias idea='/opt/idea/idea-IC-213.6777.52/bin/idea.sh >/dev/null 2>/dev/null || bg &'
-# alias battery='sudo tlp-stat -b'
-
-alias gts='git status'
-alias ga='f(){ git add "$1"; unset -f f; }; f'
-alias gaa='git add *'
-alias gp='git push'
-alias gpl='git pull'
-alias gcm='f(){ git commit -m "$1"; unset -f f; }; f'
-# alias gopen='f(){ xdg-open https://github.com/Arc891/$1 >/dev/null; unset -f f; }; f'
-alias gurl='git remote get-url origin'
-
-# alias open='f(){ xdg-open $("pwd")/"$1"; unset -f f; }; f'
-# alias coding='f(){ cd $CODING/"$1"; unset -f f; }; f'
-# alias notes='f(){ cd $HOME/Documents/Personal/Notes/"$1"; unset -f f; }; f'
-# alias cpd='f(){ coding Python/"$1"; unset -f f; }; f'
-# alias hc='cpd HackerChat'
-# alias hch='p $CODING/Python/HackerChat/hackerchat.py'
-# alias hs='hc && p $CODING/Python/HackerChat/hackerserver.py'
-alias dot='f() { cd $HOME/Documents/Personal/dotfiles/"$1"; unset -f f; }; f'
-alias cnf='f() { cd $HOME/.config/"$1"; unset -f f; }; f'
-alias conf='cnf'
-alias home='cd $HOME'
-alias docs='cd $HOME/Documents'
-alias school='cd $HOME/Documents/School' 
-alias pers='cd $HOME/Documents/Personal'
-alias down='cd $HOME/Downloads'
-alias work='cd $DOCUMENTS/Work'
-
-alias v='vim'
-alias sv='sudo vim'
-alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
-alias vrc='sudo vim /$HOME/.vimrc'
-
-alias rf='source $HOME/.zshrc'
-alias rc='clear && rf'
-alias cl='clear && print_welcome'
-
-# alias yml='code $HOME/.config/alacritty/alacritty.yml'
-# alias esp='code $HOME/.config/espanso'
-
-alias q='exit 0'
-alias p='python3'
-
-# alias sup='sudo apt update '
-# alias supg='sup && sudo apt upgrade '
-
-alias fhere='find . -name '
-alias fall='sudo find / -name '
-
-alias smt='tree -h -L 2'
-
-h() {
-	if [[ $# -eq 1 ]]; then
-		history "$1"
-	elif [[ $# -eq 2 ]]; then
-		history "$1" | grep "$2"
-	elif [[ $# -eq 3 ]]; then
-		history "$1" | grep -"$3" "$2"
-	elif [[ $# -eq 0 ]]; then
-		history 1
-	else
-		echo "Wrong usage. Use h <num=1> <grep term> <flag>"
-	fi
-}
-
-hgrep () { fc -lm "*$@*" 1 }
-
-alias hs='history 1 | grep'
-alias hsi='history 1 | grep -i'
-
-# alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
-
-# alias spia='spicetify apply'
-# alias spith='f(){ spicetify config current_theme "$1"; unset -f f; }; f'
-# alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
-
-alias matrix1='cat $DOTFILES/ascii/matrixSlant1'
-alias matrix2='cat $DOTFILES/ascii/matrixSlant2'
-alias welcome='cat $DOTFILES/ascii/zshSlant'
-alias welcome-small='cat $DOTFILES/ascii/zsh-small'
-alias nwelcome="echo Arc8\'s MacOS"
-
-#neofetch
-print_welcome() {
-	if [[ $COLUMNS -le 34 ]]; then
-		nwelcome	
-	elif [[ $COLUMNS -le 67 ]]; then
-		welcome-small
-	else 
-		welcome
-	fi
-}
-
-export PATH=$PATH:/Users/movingmedia/Library/Python/3.9/bin # PIP path
-
-HISTCONTROL='ignoredups'
-
-print_welcome
+# Zsh plugins
 export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
 source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
