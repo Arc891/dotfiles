@@ -17,7 +17,7 @@ GH_USER="Arc891"
 
 rmln() {
 	rm $ALIASES;
-	ln $DOTFILES/config/bash_aliases ~/.bash_aliases;
+	ln $DOTFILES/config/bash_aliases $ALIASES;
 }
 
 find_aliases() {
