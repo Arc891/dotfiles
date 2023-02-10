@@ -317,8 +317,9 @@ alias supg='sup && sudo apt upgrade'
 
 alias fhere='find . -name'
 alias fall='sudo find / -name'
-alias fth='tree -af | grep'
-alias fta='tree -af / | grep'
+alias fth='tree -af --ignore-case | grep'
+alias fta='tree -af --ignore-case / | grep'
+alias ft='f() {	tree -af --ignore-case "$1" | grep "$2"; unset -f f;}; f'
 alias smt='tree -ah -L 2'
 
 ##############################
