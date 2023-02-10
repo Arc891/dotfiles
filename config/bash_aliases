@@ -9,7 +9,7 @@ alias cd-='cd -'
 
 DOTFILES="$HOME/.dotfiles"
 CODING="$HOME/Documents/Coding"
-SYSTEM="arch"
+SYSTEM="$(uname -s | tr '[:upper:]' '[:lower:]')"
 GH_USER="Arc891"
 
 
