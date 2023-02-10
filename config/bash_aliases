@@ -15,6 +15,11 @@ GH_USER="Arc891"
 
 ######## FUNCTIONS ########
 
+rmln() {
+	rm $HOME/.bash_aliases;
+	ln $DOTFILES/config/bash_aliases ~/.bash_aliases;
+}
+
 trans() { sh -c "xprop -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY $(printf 0x%x $((0xffffffff * $1 / 100)))"; }
 
 mcd() { mkdir -p $1; cd $1; }
@@ -368,7 +373,9 @@ h() {
 	fi
 }
 
-hgrep () { fc -lm "*$@*" 1 }
+hgrep () { 
+	fc -lm "*$@*" 1; 
+}
 
 alias hs='history 1 | grep'
 alias hsi='history 1 | grep -i'
