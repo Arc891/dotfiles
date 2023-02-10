@@ -352,6 +352,31 @@ alias rf='source $HOME/.bashrc'
 
 
 
+######## HISTORY ########
+
+h() {
+	if [[ $# -eq 1 ]]; then
+		history "$1"
+	elif [[ $# -eq 2 ]]; then
+		history "$1" | grep "$2"
+	elif [[ $# -eq 3 ]]; then
+		history "$1" | grep -"$3" "$2"
+	elif [[ $# -eq 0 ]]; then
+		history 1
+	else
+		echo "Wrong usage. Use h <num=1> <grep term> <flag>"
+	fi
+}
+
+hgrep () { fc -lm "*$@*" 1 }
+
+alias hs='history 1 | grep'
+alias hsi='history 1 | grep -i'
+
+HISTCONTROL='ignoredups'
+
+##############################
+
 ######## RANDOM STUFF ########
 
 alias bws='rbw sync'
