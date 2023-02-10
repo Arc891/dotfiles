@@ -16,8 +16,20 @@ GH_USER="Arc891"
 ######## FUNCTIONS ########
 
 rmln() {
-	rm $HOME/.bash_aliases;
+	rm $ALIASES;
 	ln $DOTFILES/config/bash_aliases ~/.bash_aliases;
+}
+
+find_aliases() {
+	if [ -f $HOME/.bash_aliases ]; then
+		ALIASES="$HOME/.bash_aliases";
+	elif [ -f $HOME/.bashrc.d/aliases ]; then
+		ALIASES="$HOME/.bashrc.d/aliases";
+	else
+		echo "No standard aliases file found, setting default to ~/.aliases";
+		ALIASES="$HOME/.aliases";
+	fi 
+	#echo $ALIASES
 }
 
 trans() { sh -c "xprop -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY $(printf 0x%x $((0xffffffff * $1 / 100)))"; }
@@ -251,7 +263,7 @@ spp() {
 
 alias v.='vim .'
 alias sv='sudo vim'
-alias vb='v $HOME/.bash_aliases'
+alias vb='v $ALIASES'
 alias vbr='v $HOME/.bashrc'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
 alias vrc='sudo vim /etc/vim/vimrc'
@@ -397,5 +409,6 @@ alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message'
 ######## STARTUP COMMANDS ########
 
 print_welcome
+find_aliases
 #neofetch
 . "$HOME/.cargo/env"
