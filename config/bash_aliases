@@ -1,4 +1,17 @@
-# Bash aliases
+######## VARIABLES ########
+
+DOTFILES="$HOME/.dotfiles"
+CODING="$HOME/Documents/Coding"
+SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
+GH_USER="Arc891"
+
+##############################
+
+
+
+
+######## BASH ALIASES ########
+
 alias ll='pwd && ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -7,10 +20,9 @@ alias cd.='cd ..'
 alias cd~='cd $HOME'
 alias cd-='cd -'
 
-DOTFILES="$HOME/.dotfiles"
-CODING="$HOME/Documents/Coding"
-SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
-GH_USER="Arc891"
+##############################
+
+
 
 
 ######## FUNCTIONS ########
