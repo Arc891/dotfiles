@@ -7,13 +7,16 @@ fi
 
 # Zsh aliases
 alias .="source"
-alias rc="source $HOME/.zshrc && clear"
 alias vz="vim $HOME/.zshrc"
-alias vssh='vim $HOME/.ssh/config'
 
 # Zsh prompts
 # PS1="[%{$fg[red]%}%n%{$reset_color%}: %{$fg[blue]%}%~%{$reset_color%}] %% "
 autoload -U colors && colors
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
 
 # Own aliases
 source ~/.bash_aliases
@@ -23,7 +26,7 @@ export PATH="/usr/local/opt/tcl-tk/bin:$PATH"
 source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/.config/zsh-z/zsh-z.plugin.zsh
-source ~/.config/sudo.plugin.zsh
+#source ~/.config/sudo.plugin.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
