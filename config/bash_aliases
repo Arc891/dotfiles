@@ -4,6 +4,8 @@ DOTFILES="$HOME/.dotfiles"
 CODING="$HOME/Documents/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
 GH_USER="Arc891"
+ALIASES=""
+SHELLRC=""
 
 ##############################
 
@@ -42,6 +44,18 @@ find_aliases() {
 		ALIASES="$HOME/.aliases";
 	fi 
 	#echo $ALIASES
+}
+
+find_shellrc() {
+	if [[ $SHELL == "/bin/bash" ]]; then
+		SHELLRC="$HOME/.bashrc";
+	elif [[ $SHELL == "/bin/zsh" ]]; then
+		SHELLRC="$HOME/.zshrc";
+	else
+		echo "Current shell not recognized in find_shellrc(), please add rc file option"
+		echo "Setting current default to ~/.bashrc"
+		SHELLRC="$HOME/.bashrc"
+	fi	
 }
 
 trans() { sh -c "xprop -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY $(printf 0x%x $((0xffffffff * $1 / 100)))"; }
@@ -221,6 +235,7 @@ rmrepo() {
 	cd .. && rm -rf $1;
 }
 
+alias gs='git status'
 alias gts='git status'
 alias ga='f(){ git add "$1"; unset -f f; }; f'
 alias gaa='git add *'
@@ -279,6 +294,7 @@ alias vb='v $ALIASES'
 alias vbr='v $HOME/.bashrc'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
 alias vrc='sudo vim /etc/vim/vimrc'
+alias vssh='vim $HOME/.ssh/config'
 alias vbsp='v $HOME/.config/bspwm/bspwmrc'
 alias vsx='v $HOME/.config/sxhkd/sxhkdrc'
 alias polyconf='v $HOME/.config/bspwm/rices/$RICETHEME/polybar/config.ini'
@@ -319,6 +335,8 @@ alias p='python3'
 alias sup='sudo apt update'
 alias supg='sup && sudo apt upgrade'
 
+alias pcyu='sudo pacman -Syyu'
+alias pac='sudo pacman -S'
 
 ##############################
 
@@ -375,8 +393,8 @@ print_welcome() {
 
 alias cl='clear && print_welcome'
 alias cle='clear'
-alias rc='clear && source $HOME/.bashrc'
-alias rf='source $HOME/.bashrc'
+alias rc='clear && source $SHELLRC'
+alias rf='source $SHELLRC'
 
 ##############################
 
@@ -415,13 +433,16 @@ alias bws='rbw sync'
 
 alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
 
+alias beep-off='xset b off'
+
 ##############################
 
 
 
 ######## STARTUP COMMANDS ########
 
-print_welcome
+find_shellrc
 find_aliases
+print_welcome
 #neofetch
 . "$HOME/.cargo/env"
