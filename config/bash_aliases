@@ -1,4 +1,4 @@
-######## VARIABLES ########
+#------# VARIABLES #------#
 
 DOTFILES="$HOME/.dotfiles"
 CODING="$HOME/Documents/Coding"
@@ -7,12 +7,12 @@ GH_USER="Arc891"
 ALIASES=""
 SHELLRC=""
 
-##############################
+#----------------------------#
 
 
 
 
-######## BASH ALIASES ########
+#------# BASH ALIASES #------#
 
 alias ll='pwd && ls -alF'
 alias la='ls -A'
@@ -22,12 +22,12 @@ alias cd.='cd ..'
 alias cd~='cd $HOME'
 alias cd-='cd -'
 
-##############################
+#----------------------------#
 
 
 
 
-######## FUNCTIONS ########
+#------# FUNCTIONS #------#
 
 rmln() {
 	rm $ALIASES;
@@ -129,11 +129,11 @@ extract() {
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## CONNECTIONS  ########
+#------# CONNECTIONS  #------#
 
 wifi_connect() {
 	nmcli dev wifi list;
@@ -157,11 +157,11 @@ myips() {
 
 alias ngtcp='ngrok tcp 22'
 
-##############################
+#----------------------------#
 
 
 
-######## SYSTEM CONTROL ########
+#------# SYSTEM CONTROL #------#
 
 cons() { . $DOTFILES/scripts/conservation_mode.sh "$1"; }
 swap-cons() { . $DOTFILES/scripts/swap_cons_mode.sh; }
@@ -178,10 +178,10 @@ alias bat='cat /sys/class/power_supply/BAT*/capacity'
 alias btc='bluetoothctl'
 alias brf='brightnessctl set 100%'
 
-##############################
+#----------------------------#
 
 
-######## GIT ########
+#------# GIT #------#
 
 push() {
 	git add *;
@@ -237,6 +237,7 @@ rmrepo() {
 
 alias gs='git status'
 alias gts='git status'
+alias gc='git clone'
 alias ga='f(){ git add "$1"; unset -f f; }; f'
 alias gaa='git add *'
 alias gp='git push'
@@ -246,11 +247,11 @@ alias gcm='f(){ git commit -m "$1"; unset -f f; }; f'
 alias gopen='f(){ xdg-open https://github.com/$GH_USER/$1 >/dev/null; unset -f f; }; f'
 alias gurl='git remote get-url origin'
 
-##############################
+#----------------------------#
 
 
 
-######## OPENING FOLDERS ########
+#------# OPENING FOLDERS #------#
 
 school() { cd $HOME/Documents/School/BScCSy"$1"/Period"$2"/"$3"; }
 scopen() { school "$1" "$2" && open "$3" > /dev/null 2>&1; }
@@ -282,11 +283,11 @@ spp() {
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## EDITING FILES/FOLDERS ########
+#------# EDITING FILES/FOLDERS #------#
 
 alias v.='vim .'
 alias sv='sudo vim'
@@ -304,11 +305,11 @@ alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
 alias rscripts='v .config/bspwm/scripts/'
 
-##############################
+#----------------------------#
 
 
 
-######## DOCKER ########
+#------# DOCKER #------#
 
 alias d='docker'
 alias dc='docker container'
@@ -316,21 +317,21 @@ alias dcs='dc start'
 alias dcp='dc stop'
 alias da='docker attach'
 
-##############################
+#----------------------------#
 
 
 
-######## 1 LETTER SHORTHANDS ########
+#------# 1 LETTER SHORTHANDS #------#
 
 alias v='vim'
 alias q='exit 0'
 alias p='python3'
 
-##############################
+#----------------------------#
 
 
 
-######## PACKAGE MANAGER ########
+#------# PACKAGE MANAGER #------#
 
 alias sup='sudo apt update'
 alias supg='sup && sudo apt upgrade'
@@ -338,12 +339,12 @@ alias supg='sup && sudo apt upgrade'
 alias pcyu='sudo pacman -Syyu'
 alias pac='sudo pacman -S'
 
-##############################
+#----------------------------#
 
 
 
 
-######## FIND FILES ########
+#------# FIND FILES #------#
 
 alias fhere='find . -name'
 alias fall='sudo find / -name'
@@ -352,21 +353,21 @@ alias fta='tree -af --ignore-case / | grep'
 alias ft='f() {	tree -af --ignore-case "$1" | grep "$2"; unset -f f;}; f'
 alias smt='tree -ah -L 2'
 
-##############################
+#----------------------------#
 
 
 
-######## SPICETIFY ########
+#------# SPICETIFY #------#
 
 alias spia='spicetify apply'
 alias spith='f(){ spicetify config current_theme "$1"; unset -f f; }; f'
 alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 
-##############################
+#----------------------------#
 
 
 
-######## ASCII ART ########
+#------# ASCII ART #------#
 
 alias matrix1='cat $DOTFILES/ascii/matrix-Slant1'
 alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
@@ -385,22 +386,22 @@ print_welcome() {
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## REFRESH ########
+#------# REFRESH #------#
 
 alias cl='clear && print_welcome'
 alias cle='clear'
 alias rc='clear && source $SHELLRC'
 alias rf='source $SHELLRC'
 
-##############################
+#----------------------------#
 
 
 
-######## HISTORY ########
+#------# HISTORY #------#
 
 h() {
 	if [[ $# -eq 1 ]]; then
@@ -425,9 +426,11 @@ alias hsi='history 1 | grep -i'
 
 HISTCONTROL='ignoredups'
 
-##############################
+#----------------------------#
 
-######## RANDOM STUFF ########
+
+
+#------# RANDOM STUFF #------#
 
 alias bws='rbw sync'
 
@@ -435,11 +438,11 @@ alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message'
 
 alias beep-off='xset b off'
 
-##############################
+#----------------------------#
 
 
 
-######## STARTUP COMMANDS ########
+#------# STARTUP COMMANDS #------#
 
 find_shellrc
 find_aliases
