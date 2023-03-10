@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#start pkttyagent for this shell, so pkexec is able to ask for authentication
+_SHPID=$BASHPID 
+pkttyagent -p "$_SHPID" &
+_PKPID=$!
+
+pkexec bash -c '. /home/ezrah/.dotfiles/scripts/swap_cons_mode.sh'
+
+# Kill pkttyagent process
+kill "$_PKPID"
+
