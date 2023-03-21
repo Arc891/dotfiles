@@ -1,7 +1,8 @@
 #------# VARIABLES #------#
 
 DOTFILES="$HOME/.dotfiles"
-CODING="$HOME/Documents/Coding"
+DOCUMENTS="$HOME/Documents"
+CODING="$DOCUMENTS/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
 GH_USER="Arc891"
 ALIASES=""
@@ -253,12 +254,12 @@ alias gurl='git remote get-url origin'
 
 #------# OPENING FOLDERS #------#
 
-school() { cd $HOME/Documents/School/BScCSy"$1"/Period"$2"/"$3"; }
+school() { cd $DOCUMENTS/School/BScCSy"$1"/Period"$2"/"$3"; }
 scopen() { school "$1" "$2" && open "$3" > /dev/null 2>&1; }
 
 alias open='f(){ xdg-open $("pwd")/"$1"; unset -f f; }; f'
 alias coding='f(){ cd $CODING/"$1"; unset -f f; }; f'
-alias notes='f(){ cd $HOME/Documents/Personal/Notes/"$1"; unset -f f; }; f'
+alias notes='f(){ cd $DOCUMENTS/Personal/Notes/"$1"; unset -f f; }; f'
 alias cpd='f(){ coding Python/"$1"; unset -f f; }; f'
 alias hc='cpd HackerChat'
 alias hch='p $CODING/Python/HackerChat/hackerchat.py'
@@ -267,10 +268,11 @@ alias dot='f() { cd $HOME/.dotfiles/"$1"; unset -f f; }; f'
 alias cnf='f() { cd $HOME/.config/"$1"; unset -f f; }; f'
 alias conf='cnf'
 alias home='cd $HOME'
-alias docs='cd $HOME/Documents'
-alias pers='cd $HOME/Documents/Personal'
-alias scl='cd $HOME/Documents/School'
-alias coco='cd $HOME/Documents/CoCoS'
+alias docs='cd $DOCUMENTS'
+alias pers='cd $DOCUMENTS/Personal'
+alias scl='cd $DOCUMENTS/School'
+alias coco='cd $DOCUMENTS/CoCoS'
+alias rustl='cd $CODING/Rust/rustlings'
 
 spp() {
 	nums='^[0-9]+$'
