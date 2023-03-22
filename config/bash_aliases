@@ -273,6 +273,7 @@ alias pers='cd $DOCUMENTS/Personal'
 alias scl='cd $DOCUMENTS/School'
 alias coco='cd $DOCUMENTS/CoCoS'
 alias rustl='cd $CODING/Rust/rustlings'
+alias rustlw='rustl && rustlings watch'
 
 spp() {
 	nums='^[0-9]+$'
