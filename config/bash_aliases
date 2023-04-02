@@ -379,10 +379,20 @@ alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
 alias nwelcome="echo Arc8\'s $SYSTEM"
 alias ascii='xdg-open https://patorjk.com/software/taag &'
 
+get_print_width() {
+    if [[ $# -eq 1 ]]; then
+        local FILE="$DOTFILES/ascii/$SYSTEM-small"
+    else
+        local FILE="$DOTFILES/ascii/$SYSTEM-Slant"
+    fi
+
+    echo $(head -n 2 $FILE | tail -n 1 | awk '{print length}');
+}
+
 print_welcome() {
-	if [[ $COLUMNS -le 34 ]]; then
+    if [[ $COLUMNS -le $(get_print_width -s) ]]; then
 		nwelcome	
-	elif [[ $COLUMNS -le 72 ]]; then
+    elif [[ $COLUMNS -le $(get_print_width) ]]; then
 		welcome-small
 	else 
 		welcome
