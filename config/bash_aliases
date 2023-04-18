@@ -274,6 +274,7 @@ alias scl='cd $DOCUMENTS/School'
 alias coco='cd $DOCUMENTS/CoCoS'
 alias rustl='cd $CODING/Rust/rustlings'
 alias rustlw='rustl && rustlings watch'
+alias bach='cd $DOCUMENTS/BachelorThesis'
 
 spp() {
 	nums='^[0-9]+$'
@@ -460,5 +461,6 @@ alias beep-off='xset b off'
 find_shellrc
 find_aliases
 print_welcome
+beep-off
 #neofetch
 . "$HOME/.cargo/env"
