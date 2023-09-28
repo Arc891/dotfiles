@@ -15,6 +15,38 @@ SHELLRC=""
 
 #------# BASH ALIASES #------#
 
+#------# LS REPLACEMENTS #------#
+
+#--# COLORLS #--#
+
+# if [ -x "$(command -v colorls)" ]; then
+	#alias ls='colorls --sd'
+	#alias lse='colorls -1'
+	#alias lsd='colorls -d'
+	#alias lsf='colorls -f'
+	#alias lst='colorls --tree'
+	#alias lsg='colorls --gs --tree'
+	#alias lsts='f(){ colorls --tree=2; unset -f f; }; f'
+	#alias lstn='f(){ colorls --tree="$1"; unset -f f; }; f'
+# fi
+#---------------#
+
+#--# EXA #--#
+if [ -x "$(command -v eza)" ]; then
+	alias ls='eza --icons --group-directories-first'
+	alias lse='ls -1'
+	alias lsd='ls -D'
+	alias lsf='ls -f'
+	alias lst='ls -T'
+	alias lsg='ls -T --git'
+	alias lsts='ls -T -L 2'
+	alias lstn='f(){ ls -T -L "$1"; unset -f f; }; f'
+fi
+#-----------#
+
+#-----------------#
+
+
 alias ll='pwd && ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -296,7 +328,7 @@ spp() {
 alias v.='vim .'
 alias sv='sudo vim'
 alias vb='v $ALIASES'
-alias vbr='v $HOME/.bashrc'
+alias vbr='v $SHELLRC'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
 alias vrc='sudo vim /etc/vim/vimrc'
 alias vssh='vim $HOME/.ssh/config'
