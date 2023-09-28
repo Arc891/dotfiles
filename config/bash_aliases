@@ -4,6 +4,9 @@ DOTFILES="$HOME/.dotfiles"
 DOCUMENTS="$HOME/Documents"
 CODING="$DOCUMENTS/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
+if [[ $SYSTEM == "ez-pop" ]]; then 
+	SYSTEM="linux"; 
+fi
 GH_USER="Arc891"
 ALIASES=""
 SHELLRC=""
