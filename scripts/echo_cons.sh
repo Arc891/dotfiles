@@ -7,9 +7,9 @@ ICON=$(/bin/python ~/.dotfiles/scripts/battery_icon.py $PERCENT $CHARGING)
 
 if [ "$1" == "--icon-only" ]; then
     if [[ $MODE -eq 1 ]]; then
-	    echo "󰌪c"
+	    echo "󰌪"
     else
-        echo "󱐋f"
+        echo "󱐋"
     fi
 else
     if [[ $MODE -eq 1 ]]; then

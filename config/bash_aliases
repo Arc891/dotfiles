@@ -1,18 +1,19 @@
-######## VARIABLES ########
+#------# VARIABLES #------#
 
 DOTFILES="$HOME/.dotfiles"
-CODING="$HOME/Documents/Coding"
+DOCUMENTS="$HOME/Documents"
+CODING="$DOCUMENTS/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
 GH_USER="Arc891"
 ALIASES=""
 SHELLRC=""
 
-##############################
+#----------------------------#
 
 
 
 
-######## BASH ALIASES ########
+#------# BASH ALIASES #------#
 
 alias ll='pwd && ls -alF'
 alias la='ls -A'
@@ -22,12 +23,12 @@ alias cd.='cd ..'
 alias cd~='cd $HOME'
 alias cd-='cd -'
 
-##############################
+#----------------------------#
 
 
 
 
-######## FUNCTIONS ########
+#------# FUNCTIONS #------#
 
 rmln() {
 	rm $ALIASES;
@@ -129,11 +130,11 @@ extract() {
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## CONNECTIONS  ########
+#------# CONNECTIONS  #------#
 
 wifi_connect() {
 	nmcli dev wifi list;
@@ -157,11 +158,11 @@ myips() {
 
 alias ngtcp='ngrok tcp 22'
 
-##############################
+#----------------------------#
 
 
 
-######## SYSTEM CONTROL ########
+#------# SYSTEM CONTROL #------#
 
 cons() { . $DOTFILES/scripts/conservation_mode.sh "$1"; }
 swap-cons() { . $DOTFILES/scripts/swap_cons_mode.sh; }
@@ -178,10 +179,10 @@ alias bat='cat /sys/class/power_supply/BAT*/capacity'
 alias btc='bluetoothctl'
 alias brf='brightnessctl set 100%'
 
-##############################
+#----------------------------#
 
 
-######## GIT ########
+#------# GIT #------#
 
 push() {
 	git add *;
@@ -237,6 +238,7 @@ rmrepo() {
 
 alias gs='git status'
 alias gts='git status'
+alias gc='git clone'
 alias ga='f(){ git add "$1"; unset -f f; }; f'
 alias gaa='git add *'
 alias gp='git push'
@@ -246,18 +248,18 @@ alias gcm='f(){ git commit -m "$1"; unset -f f; }; f'
 alias gopen='f(){ xdg-open https://github.com/$GH_USER/$1 >/dev/null; unset -f f; }; f'
 alias gurl='git remote get-url origin'
 
-##############################
+#----------------------------#
 
 
 
-######## OPENING FOLDERS ########
+#------# OPENING FOLDERS #------#
 
-school() { cd $HOME/Documents/School/BScCSy"$1"/Period"$2"/"$3"; }
+school() { cd $DOCUMENTS/School/BScCSy"$1"/Period"$2"/"$3"; }
 scopen() { school "$1" "$2" && open "$3" > /dev/null 2>&1; }
 
 alias open='f(){ xdg-open $("pwd")/"$1"; unset -f f; }; f'
 alias coding='f(){ cd $CODING/"$1"; unset -f f; }; f'
-alias notes='f(){ cd $HOME/Documents/Personal/Notes/"$1"; unset -f f; }; f'
+alias notes='f(){ cd $DOCUMENTS/Personal/Notes/"$1"; unset -f f; }; f'
 alias cpd='f(){ coding Python/"$1"; unset -f f; }; f'
 alias hc='cpd HackerChat'
 alias hch='p $CODING/Python/HackerChat/hackerchat.py'
@@ -266,10 +268,13 @@ alias dot='f() { cd $HOME/.dotfiles/"$1"; unset -f f; }; f'
 alias cnf='f() { cd $HOME/.config/"$1"; unset -f f; }; f'
 alias conf='cnf'
 alias home='cd $HOME'
-alias docs='cd $HOME/Documents'
-alias pers='cd $HOME/Documents/Personal'
-alias scl='cd $HOME/Documents/School'
-alias coco='cd $HOME/Documents/CoCoS'
+alias docs='cd $DOCUMENTS'
+alias pers='cd $DOCUMENTS/Personal'
+alias scl='cd $DOCUMENTS/School'
+alias coco='cd $DOCUMENTS/CoCoS'
+alias rustl='cd $CODING/Rust/rustlings'
+alias rustlw='rustl && rustlings watch'
+alias bach='cd $DOCUMENTS/BachelorThesis'
 
 spp() {
 	nums='^[0-9]+$'
@@ -282,11 +287,11 @@ spp() {
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## EDITING FILES/FOLDERS ########
+#------# EDITING FILES/FOLDERS #------#
 
 alias v.='vim .'
 alias sv='sudo vim'
@@ -304,11 +309,11 @@ alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
 alias rscripts='v .config/bspwm/scripts/'
 
-##############################
+#----------------------------#
 
 
 
-######## DOCKER ########
+#------# DOCKER #------#
 
 alias d='docker'
 alias dc='docker container'
@@ -316,21 +321,21 @@ alias dcs='dc start'
 alias dcp='dc stop'
 alias da='docker attach'
 
-##############################
+#----------------------------#
 
 
 
-######## 1 LETTER SHORTHANDS ########
+#------# 1 LETTER SHORTHANDS #------#
 
 alias v='vim'
 alias q='exit 0'
 alias p='python3'
 
-##############################
+#----------------------------#
 
 
 
-######## PACKAGE MANAGER ########
+#------# PACKAGE MANAGER #------#
 
 alias sup='sudo apt update'
 alias supg='sup && sudo apt upgrade'
@@ -338,12 +343,12 @@ alias supg='sup && sudo apt upgrade'
 alias pcyu='sudo pacman -Syyu'
 alias pac='sudo pacman -S'
 
-##############################
+#----------------------------#
 
 
 
 
-######## FIND FILES ########
+#------# FIND FILES #------#
 
 alias fhere='find . -name'
 alias fall='sudo find / -name'
@@ -352,21 +357,21 @@ alias fta='tree -af --ignore-case / | grep'
 alias ft='f() {	tree -af --ignore-case "$1" | grep "$2"; unset -f f;}; f'
 alias smt='tree -ah -L 2'
 
-##############################
+#----------------------------#
 
 
 
-######## SPICETIFY ########
+#------# SPICETIFY #------#
 
 alias spia='spicetify apply'
 alias spith='f(){ spicetify config current_theme "$1"; unset -f f; }; f'
 alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 
-##############################
+#----------------------------#
 
 
 
-######## ASCII ART ########
+#------# ASCII ART #------#
 
 alias matrix1='cat $DOTFILES/ascii/matrix-Slant1'
 alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
@@ -375,32 +380,42 @@ alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
 alias nwelcome="echo Arc8\'s $SYSTEM"
 alias ascii='xdg-open https://patorjk.com/software/taag &'
 
+get_print_width() {
+    if [[ $# -eq 1 ]]; then
+        local FILE="$DOTFILES/ascii/$SYSTEM-small"
+    else
+        local FILE="$DOTFILES/ascii/$SYSTEM-Slant"
+    fi
+
+    echo $(head -n 2 $FILE | tail -n 1 | awk '{print length}');
+}
+
 print_welcome() {
-	if [[ $COLUMNS -le 34 ]]; then
+    if [[ $COLUMNS -le $(get_print_width -s) ]]; then
 		nwelcome	
-	elif [[ $COLUMNS -le 72 ]]; then
+    elif [[ $COLUMNS -le $(get_print_width) ]]; then
 		welcome-small
 	else 
 		welcome
 	fi
 }
 
-##############################
+#----------------------------#
 
 
 
-######## REFRESH ########
+#------# REFRESH #------#
 
 alias cl='clear && print_welcome'
 alias cle='clear'
 alias rc='clear && source $SHELLRC'
 alias rf='source $SHELLRC'
 
-##############################
+#----------------------------#
 
 
 
-######## HISTORY ########
+#------# HISTORY #------#
 
 h() {
 	if [[ $# -eq 1 ]]; then
@@ -425,9 +440,11 @@ alias hsi='history 1 | grep -i'
 
 HISTCONTROL='ignoredups'
 
-##############################
+#----------------------------#
 
-######## RANDOM STUFF ########
+
+
+#------# RANDOM STUFF #------#
 
 alias bws='rbw sync'
 
@@ -435,14 +452,15 @@ alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message'
 
 alias beep-off='xset b off'
 
-##############################
+#----------------------------#
 
 
 
-######## STARTUP COMMANDS ########
+#------# STARTUP COMMANDS #------#
 
 find_shellrc
 find_aliases
 print_welcome
+beep-off
 #neofetch
 . "$HOME/.cargo/env"
