@@ -4,7 +4,7 @@ DOTFILES="$HOME/.dotfiles"
 DOCUMENTS="$HOME/Documents"
 CODING="$DOCUMENTS/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
-if [[ $SYSTEM == "ez-pop" ]]; then 
+if [[ $SYSTEM == "ez-pop" ]] || [[ $SYSTEM == "laptop-m3vnok27" ]]; then 
 	SYSTEM="linux"; 
 fi
 GH_USER="Arc891"
@@ -49,6 +49,16 @@ fi
 
 #-----------------#
 
+function cls() {
+	DIR="$*";
+	# if no DIR given, go home
+	if [ $# -lt 1 ]; then 
+		DIR=$HOME;
+    	fi;
+    	builtin cd "${DIR}" && \
+	ls
+}
+
 
 alias ll='pwd && ls -alF'
 alias la='ls -A'
@@ -57,6 +67,7 @@ alias lsl='pwd && ls'
 alias cd.='cd ..'
 alias cd~='cd $HOME'
 alias cd-='cd -'
+alias cpv='rsync -ah --info=progress2'
 
 #----------------------------#
 
@@ -391,6 +402,7 @@ alias fth='tree -af --ignore-case | grep'
 alias fta='tree -af --ignore-case / | grep'
 alias ft='f() {	tree -af --ignore-case "$1" | grep "$2"; unset -f f;}; f'
 alias smt='tree -ah -L 2'
+alias bgt='tree -ahRFC --du --dirsfirst --filelimit=40'
 
 #----------------------------#
 
@@ -425,7 +437,19 @@ get_print_width() {
     echo $(head -n 2 $FILE | tail -n 1 | awk '{print length}');
 }
 
+set_welcome_print() {
+    if [ -z "$#" ]; then
+	    echo "Give an input of 0 for prints off, anything else for on";
+    fi
+    echo "$1" > $HOME/.config/print;
+}
+
 print_welcome() {
+    if [ -f $HOME/.config/print ]; then
+    		if [[ $(cat $HOME/.config/print) == "0" ]]; then
+	   		return
+		fi
+    fi
     if [[ $COLUMNS -le $(get_print_width -s) ]]; then
 		nwelcome	
     elif [[ $COLUMNS -le $(get_print_width) ]]; then
@@ -496,6 +520,6 @@ alias beep-off='xset b off'
 find_shellrc
 find_aliases
 print_welcome
-beep-off
+#beep-off
 #neofetch
-. "$HOME/.cargo/env"
+#. "$HOME/.cargo/env"
