@@ -425,6 +425,7 @@ alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
 alias welcome='cat $DOTFILES/ascii/$SYSTEM-Slant'
 alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
 alias nwelcome="echo Arc8\'s $SYSTEM"
+alias awelcome="echo Anamata\'s $SYSTEM"
 alias ascii='xdg-open https://patorjk.com/software/taag &'
 
 get_print_width() {
@@ -445,18 +446,22 @@ set_welcome_print() {
 }
 
 print_welcome() {
-    if [ -f $HOME/.config/print ]; then
+    if [[ $USER == "anamata" ]]; then 
+	awelcome
+    else
+    	if [ -f $HOME/.config/print ]; then
     		if [[ $(cat $HOME/.config/print) == "0" ]]; then
 	   		return
 		fi
-    fi
-    if [[ $COLUMNS -le $(get_print_width -s) ]]; then
+    	fi
+    	if [[ $COLUMNS -le $(get_print_width -s) ]]; then
 		nwelcome	
-    elif [[ $COLUMNS -le $(get_print_width) ]]; then
+    	elif [[ $COLUMNS -le $(get_print_width) ]]; then
 		welcome-small
 	else 
 		welcome
 	fi
+    fi
 }
 
 #----------------------------#
