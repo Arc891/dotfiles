@@ -4,7 +4,7 @@ DOTFILES="$HOME/.dotfiles"
 DOCUMENTS="$HOME/Documents"
 CODING="$DOCUMENTS/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
-if [[ $SYSTEM == "ez-pop" ]] || [[ $SYSTEM == "laptop-m3vnok27" ]]; then 
+if [[ $SYSTEM == "pop-os" ]] || [[ $SYSTEM == "ez-pop" ]] || [[ $SYSTEM == "laptop-m3vnok27" ]]; then 
 	SYSTEM="linux"; 
 fi
 GH_USER="Arc891"
@@ -94,9 +94,9 @@ find_aliases() {
 }
 
 find_shellrc() {
-	if [[ $SHELL == "/bin/bash" ]]; then
+	if [[ $SHELL == "$(which bash)" ]]; then
 		SHELLRC="$HOME/.bashrc";
-	elif [[ $SHELL == "/bin/zsh" ]]; then
+	elif [[ $SHELL == "$(which zsh)" ]]; then
 		SHELLRC="$HOME/.zshrc";
 	else
 		echo "Current shell not recognized in find_shellrc(), please add rc file option"
@@ -220,8 +220,12 @@ cus() { ps -aux | rg "$1" | awk '{print $3}' | awk '{s+=$1} END {print s/16}'; }
 
 usage() { echo "CPU: $(cus $1)%, MEM: $(memus $1)%"; }
 
+alias duah='du -ah "$1" | grep -v "/$" | sort -rh'
+
+alias cat='batcat'
+
 alias battery='sudo tlp-stat -b'
-alias bat='cat /sys/class/power_supply/BAT*/capacity'
+alias batc='cat /sys/class/power_supply/BAT*/capacity'
 alias btc='bluetoothctl'
 alias brf='brightnessctl set 100%'
 
@@ -341,6 +345,7 @@ spp() {
 
 alias v.='vim .'
 alias sv='sudo vim'
+alias vf='vim $(fzf --height 40%)'
 alias vb='v $ALIASES'
 alias vbr='v $SHELLRC'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
@@ -354,6 +359,7 @@ alias rice='v .config/bspwm/rices/$RICETHEME/'
 alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
 alias rscripts='v .config/bspwm/scripts/'
+alias idea='eureka'
 
 #----------------------------#
 
@@ -404,6 +410,8 @@ alias ft='f() {	tree -af --ignore-case "$1" | grep "$2"; unset -f f;}; f'
 alias smt='tree -ah -L 2'
 alias bgt='tree -ahRFC --du --dirsfirst --filelimit=40'
 
+tre() { command tre "$@" -e && source "/tmp/tre_aliases_$USER" 2>/dev/null; }
+
 #----------------------------#
 
 
@@ -420,10 +428,10 @@ alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 
 #------# ASCII ART #------#
 
-alias matrix1='cat $DOTFILES/ascii/matrix-Slant1'
-alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
-alias welcome='cat $DOTFILES/ascii/$SYSTEM-Slant'
-alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
+alias matrix1='batcat $DOTFILES/ascii/matrix-Slant1'
+alias matrix2='batcat $DOTFILES/ascii/matrix-Slant2'
+alias welcome='batcat $DOTFILES/ascii/$SYSTEM-Slant'
+alias welcome-small='batcat $DOTFILES/ascii/$SYSTEM-small'
 alias nwelcome="echo Arc8\'s $SYSTEM"
 alias awelcome="echo Anamata\'s $SYSTEM"
 alias ascii='xdg-open https://patorjk.com/software/taag &'
@@ -524,7 +532,8 @@ alias beep-off='xset b off'
 
 find_shellrc
 find_aliases
-print_welcome
+cl
+#print_welcome
 #beep-off
 #neofetch
 #. "$HOME/.cargo/env"
