@@ -125,3 +125,5 @@ if [ -f `which powerline-daemon` ]; then
 fi
 
 . "$HOME/.cargo/env"
+
+eval "$(starship init bash)"

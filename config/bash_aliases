@@ -2,7 +2,7 @@
 
 DOTFILES="$HOME/.dotfiles"
 DOCUMENTS="$HOME/Documents"
-CODING="$DOCUMENTS/Coding"
+CODING="$HOME/Coding"
 SYSTEM="$(uname -n | tr '[:upper:]' '[:lower:]')"
 if [[ $SYSTEM == "pop-os" ]] || [[ $SYSTEM == "ez-pop" ]] || [[ $SYSTEM == "laptop-m3vnok27" ]]; then 
 	SYSTEM="linux"; 
@@ -222,7 +222,7 @@ usage() { echo "CPU: $(cus $1)%, MEM: $(memus $1)%"; }
 
 alias duah='du -ah "$1" | grep -v "/$" | sort -rh'
 
-alias cat='batcat'
+alias cat='bat'
 
 alias battery='sudo tlp-stat -b'
 alias batc='cat /sys/class/power_supply/BAT*/capacity'
@@ -297,6 +297,7 @@ alias gplp='git pull && git push'
 alias gcm='f(){ git commit -m "$1"; unset -f f; }; f'
 alias gopen='f(){ xdg-open https://github.com/$GH_USER/$1 >/dev/null; unset -f f; }; f'
 alias gurl='git remote get-url origin'
+alias gclmy='f() { git clone git@github.com:Arc891/$1.git; unset -f f; }; f'
 
 #----------------------------#
 
@@ -343,14 +344,14 @@ spp() {
 
 #------# EDITING FILES/FOLDERS #------#
 
-alias v.='vim .'
+alias v.='nvim .'
 alias sv='sudo vim'
-alias vf='vim $(fzf --height 40%)'
+alias vf='v $(fzf --height 40%)'
 alias vb='v $ALIASES'
 alias vbr='v $SHELLRC'
 alias vms='v $DOTFILES/scripts/vim_shortcuts.txt'
 alias vrc='sudo vim /etc/vim/vimrc'
-alias vssh='vim $HOME/.ssh/config'
+alias vssh='v $HOME/.ssh/config'
 alias vbsp='v $HOME/.config/bspwm/bspwmrc'
 alias vsx='v $HOME/.config/sxhkd/sxhkdrc'
 alias polyconf='v $HOME/.config/bspwm/rices/$RICETHEME/polybar/config.ini'
@@ -358,7 +359,9 @@ alias polymods='v $HOME/.config/bspwm/rices/$RICETHEME/polybar/modules.ini'
 alias rice='v .config/bspwm/rices/$RICETHEME/'
 alias yml='code $HOME/.config/alacritty/alacritty.yml'
 alias esp='code $HOME/.config/espanso'
-alias rscripts='v .config/bspwm/scripts/'
+alias rscripts='v $HOME/.config/bspwm/scripts/'
+alias vh='v $HOME/.config/hypr/hyprland.conf'
+alias vw='v $HOME/.config/waybar/config.jsonc'
 alias idea='eureka'
 
 #----------------------------#
@@ -394,6 +397,7 @@ alias supg='sup && sudo apt upgrade'
 
 alias pcyu='sudo pacman -Syyu'
 alias pac='sudo pacman -S'
+alias ys='yay -S'
 
 #----------------------------#
 
@@ -428,10 +432,10 @@ alias spics='f(){ spicetify config color_scheme "$1"; unset -f f; }; f'
 
 #------# ASCII ART #------#
 
-alias matrix1='batcat $DOTFILES/ascii/matrix-Slant1'
-alias matrix2='batcat $DOTFILES/ascii/matrix-Slant2'
-alias welcome='batcat $DOTFILES/ascii/$SYSTEM-Slant'
-alias welcome-small='batcat $DOTFILES/ascii/$SYSTEM-small'
+alias matrix1='cat $DOTFILES/ascii/matrix-Slant1'
+alias matrix2='cat $DOTFILES/ascii/matrix-Slant2'
+alias welcome='cat $DOTFILES/ascii/$SYSTEM-Slant'
+alias welcome-small='cat $DOTFILES/ascii/$SYSTEM-small'
 alias nwelcome="echo Arc8\'s $SYSTEM"
 alias awelcome="echo Anamata\'s $SYSTEM"
 alias ascii='xdg-open https://patorjk.com/software/taag &'
@@ -523,6 +527,8 @@ alias bws='rbw sync'
 alias gdm-banner='v /etc/dconf/db/gdm.d/01-banner-message' 
 
 alias beep-off='xset b off'
+
+alias restart_waybar='killall -SIGUSR2 waybar'
 
 #----------------------------#
 
