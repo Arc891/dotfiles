@@ -1,23 +1,32 @@
 #!/bin/bash
-echo "Enter the username to run the setup on: "
-read user
-home_links=(bash_aliases bashrc p10k.zsh zshrc)
-conf_dirs=(powerlevel10k zsh-autocomplete zsh-z)
+echo "This setup script requires the dotfiles folder to be located at ~/.dotfiles. If this is not the case, Ctrl+C and move it there, or change this script accordingly."
+read -p "Enter the username to run the setup on: " username
+exclude="setup|mac"
+home_links=$(find /home/$USER/.dotfiles/config -maxdepth 1 -type f | grep -Pv "$exclude")
+conf_dirs=$(find /home/$USER/.dotfiles/config -maxdepth 1 -type d | grep -P "config/")
+
+echo $home_links
+echo $conf_dirs
+read -p "Confirm these files to be linked? [y/N] " conf;
+
+if [[ $conf != "y" ]] && [[ $conf != "Y" ]]; then
+	exit;
+fi
 
 for f in ${home_links[@]}; do
-	if [ -f /home/$user/.$f ]; then
-		mv /home/$user/.$f /home/$user/backup_.$f
+	if [ -f /home/$username/.$f ]; then
+		mv /home/$username/.$f /home/$username/backup_.$f
 	fi
 	
-	echo "/home/$user/.dotfiles/config/$f -> /home/$user/.$f"
+	echo "/home/$username/.dotfiles/config/$f -> /home/$username/.$f"
 
-	ln /home/$user/.dotfiles/config/$f /home/$user/.$f
+	ln -sf /home/$username/.dotfiles/config/$f /home/$username/.$f
 done
 
-for d in ${conf_dits[@]}; do
-	if [ -d /home/$user/.config/$d ]; then
+for d in ${conf_dirs[@]}; do
+	if [ -d /home/$username/.config/$d ]; then
 		continue;
 	fi 
 
-	cp -r /home/$user/.dotfiles/config/$d /home/$user/.config
+	cp -r /home/$username/.dotfiles/config/$d /home/$username/.config
 done
