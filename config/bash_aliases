@@ -323,7 +323,7 @@ alias docs='cd $DOCUMENTS'
 alias pers='cd $DOCUMENTS/Personal'
 alias scl='cd $DOCUMENTS/School'
 alias coco='cd $DOCUMENTS/CoCoS'
-alias rustl='cd $CODING/Rust/rustlings'
+alias rustl='cd $CODING/rustlings'
 alias rustlw='rustl && rustlings watch'
 alias bach='cd $DOCUMENTS/BachelorThesis'
 
