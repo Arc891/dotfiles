@@ -325,7 +325,7 @@ alias docs='cd $DOCUMENTS'
 alias pers='cd $DOCUMENTS/Personal'
 alias scl='cd $DOCUMENTS/School'
 alias coco='cd $DOCUMENTS/CoCoS'
-alias rustl='cd $CODING/Rust/rustlings'
+alias rustl='cd $CODING/rustlings'
 alias rustlw='rustl && rustlings watch'
 alias bach='cd $DOCUMENTS/BachelorThesis'
 
@@ -346,7 +346,7 @@ spp() {
 
 #------# EDITING FILES/FOLDERS #------#
 
-alias v.='vim .'
+alias v.='v .'
 alias sv='sudo vim'
 alias vf='v $(fzf --height 40%)'
 alias vb='v $ALIASES'
@@ -384,9 +384,18 @@ alias da='docker attach'
 
 
 
+#------# CODING #------#
+
+alias leetr='clear && rustc rust.rs && RUST_BACKTRACE=full ./rust'
+alias leetcpp='clear && g++ -o cpp main.cpp && ./cpp'
+
+#----------------------------#
+
+
+
 #------# 1 LETTER SHORTHANDS #------#
 
-alias v='vim'
+alias v='nvim'
 alias q='exit 0'
 alias p='python3'
 
